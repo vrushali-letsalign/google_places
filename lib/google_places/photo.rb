@@ -34,5 +34,21 @@ module GooglePlaces
       end
       @fetched_url
     end
+
+    def fetch_photo(maxwidth, maxheight, options = {})
+      language  = options.delete(:language)
+      retry_options = options.delete(:retry_options) || {}
+
+      unless @fetched_url
+        @fetched_url = Request.photo_url(
+          :maxwidth => maxwidth,
+          :maxheight => maxheight,
+          :photoreference => @photo_reference,
+          :key => @api_key,
+          :retry_options => retry_options
+        )
+      end
+      @fetched_url
+    end
   end
 end
